@@ -1,0 +1,817 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Nodejs eCommerce Shopping API that allows API consumers to interact with the application, behind the scene it uses Nodejs, Express and MongoDB",
+    "version": "1.0",
+    "title": "Nodejs eCommerce API",
+    "contact": {
+      "email": "giftmbanda@gmail.com"
+    }
+  },
+
+  "externalDocs": {
+    "description": "Read about the developer",
+    "url": "http://giftmbanda.com"
+  },
+
+  "host": "outset-v1.herokuapp.com",
+
+  "schemes": ["https"],
+
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "admin",
+      "description": "Operations about admin"
+    },
+    {
+      "name": "category",
+      "description": "Operations about category"
+    },
+    {
+      "name": "product",
+      "description": "Operations about product"
+    },
+    {
+      "name": "cart",
+      "description": "Operations about cart"
+    }
+  ],
+
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Create user",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "firstName",
+            "type": "string",
+            "description": "firstName of the user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "lastName",
+            "type": "string",
+            "description": "lastName of the user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "user email",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "user password",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "phone",
+            "type": "string",
+            "description": "user phonenumber",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid name/email/password/phone supplied"
+          }
+        }
+      }
+    },
+
+    "/user/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Log in user",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "user email",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "user password",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid email/password supplied"
+          }
+        }
+      }
+    },
+
+    "/user/data": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Check user authentication",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "auth-token",
+            "description": "token given to user upon a successful login"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid token provided"
+          }
+        }
+      }
+    },
+
+    "/user/{userId}": {
+      "patch": {
+        "tags": ["user"],
+        "summary": "Update user",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "userId that need to be updated",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "auth-token",
+            "description": "token given to user upon a successful login"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["user"],
+        "summary": "Delete user",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "userId that needs to be deleted",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "auth-token",
+            "description": "token given to user upon a successful login"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/admin": {
+      "post": {
+        "tags": ["admin"],
+        "summary": "Create admin",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "firstName",
+            "type": "string",
+            "description": "firstName of the admin",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "lastName",
+            "type": "string",
+            "description": "lastName of the admin",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "admin email",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "admin password",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "phone",
+            "type": "string",
+            "description": "admin phonenumber",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid name/email/password/phone supplied"
+          }
+        }
+      }
+    },
+
+    "/admin/login": {
+      "post": {
+        "tags": ["admin"],
+        "summary": "Log in admin",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "admin email",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "admin password",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid email/password supplied"
+          }
+        }
+      }
+    },
+
+    "/admin/data": {
+      "get": {
+        "tags": ["admin"],
+        "summary": "Check admin authentication",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "admin-token",
+            "description": "token given to admin upon a successful login"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid token provided"
+          }
+        }
+      }
+    },
+
+    "/admin/{userId}": {
+      "patch": {
+        "tags": ["admin"],
+        "summary": "Update admin",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "userId that need to be updated",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "admin-token",
+            "description": "token given to admin upon a successful login"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["admin"],
+        "summary": "Delete admin",
+        "description": "This can only be done by the logged in user.",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "userId that needs to be deleted",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "admin-token",
+            "description": "token given to user upon a successful login"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/category": {
+      "post": {
+        "tags": ["category"],
+        "summary": "add a category",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "description": "category name",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/category/show": {
+      "get": {
+        "tags": ["category"],
+        "summary": "list categories",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/product": {
+      "post": {
+        "tags": ["product"],
+        "summary": "add a product",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "description": "product name",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "type": "string",
+            "description": "product description",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "price",
+            "type": "string",
+            "description": "product price",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "quantity",
+            "type": "integer",
+            "description": "product quantity",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "productImage",
+            "type": "file",
+            "description": "product image",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "categoryId",
+            "type": "string",
+            "description": "product categoryId",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/product/show": {
+      "get": {
+        "tags": ["product"],
+        "summary": "list products",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/cart": {
+      "post": {
+        "tags": ["cart"],
+        "summary": "add products to cart",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "userId",
+            "type": "string",
+            "description": "user id",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "productId",
+            "type": "string",
+            "description": "product id",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "quantity",
+            "type": "integer",
+            "description": "product quantity",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/cart/{cartId}": {
+      "get": {
+        "tags": ["cart"],
+        "summary": "show the order",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cartId",
+            "description": "cartId of the order",
+            "type": "string"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/cart/show/{userId}": {
+      "get": {
+        "tags": ["cart"],
+        "summary": "list all the orders of the user / show cart",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "id of the user",
+            "type": "string"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+
+    "/admin/user/{userId}": {
+      "delete": {
+        "tags": ["admin"],
+        "summary": "Delete user",
+        "description": "",
+
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "userId that needs to be deleted",
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "admin-token",
+            "description": "token given to admin upon a successful login"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": ["firstName", "lastName", "email", "password", "phone"],
+
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+
+      "xml": {
+        "name": "User"
+      }
+    },
+
+    "Cart": {
+      "type": "object",
+      "required": ["userId", "productId", "quantity"],
+
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "default": "1"
+        }
+      },
+
+      "xml": {
+        "name": "Cart"
+      }
+    },
+
+    "Product": {
+      "type": "object",
+      "required": ["name", "description", "price", "productImage", "categoryId", "quantity"],
+
+      "properties": {
+        "name": {
+          "type": "String"
+        },
+        "description": {
+          "type": "String"
+        },
+        "price": {
+          "type": "number",
+          "default": "1"
+        },
+        "productImage": {
+          "type": "String"
+        },
+        "categoryId": {
+          "type": "String"
+        },
+        "quantity": {
+          "type": "integer",
+          "default": "1"
+        }
+      },
+
+      "xml": {
+        "name": "Product"
+      }
+    },
+
+    "Category": {
+      "type": "object",
+      "required": ["name"],
+
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+
+      "xml": {
+        "name": "Cart"
+      }
+    }
+  }
+}
